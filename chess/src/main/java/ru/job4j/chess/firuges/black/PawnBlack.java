@@ -1,7 +1,7 @@
-package ru.job4j.chess.figures.black;
+package ru.job4j.chess.firuges.black;
 
-import ru.job4j.chess.figures.Cell;
-import ru.job4j.chess.figures.Figure;
+import ru.job4j.chess.firuges.Cell;
+import ru.job4j.chess.firuges.Figure;
 
 /**
  *
@@ -17,9 +17,6 @@ public class PawnBlack implements Figure {
     }
 
     @Override
-    public boolean canJump() { return false; }
-
-    @Override
     public Cell position() {
         return this.position;
     }
@@ -27,16 +24,8 @@ public class PawnBlack implements Figure {
     @Override
     public Cell[] way(Cell source, Cell dest) {
         Cell[] steps = new Cell[0];
-        int availDelta;
-        if (source.y == 6) {
-            availDelta = 2;
-        } else {
-            availDelta = 1;
-        }
-        if (dest.y < source.y && dest.y >= source.y - availDelta && source.x == dest.x) {
-            int idx = 0;
-            steps = new Cell[Math.abs(dest.y - source.y)];
-            idx = Cell.fillCellsVert(source.y, dest.y, source.x, steps, idx);
+        if (source.y == dest.y + 1 && source.x == dest.x) {
+            steps = new Cell[] { dest };
         }
         return steps;
     }

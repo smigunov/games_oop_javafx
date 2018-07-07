@@ -35,7 +35,9 @@ public class PawnWhite implements Figure {
             availDelta = 1;
         }
         if (dest.y > source.y && dest.y <= source.y + availDelta && source.x == dest.x) {
-            steps = new Cell[] { dest };
+            int idx = 0;
+            steps = new Cell[Math.abs(dest.y - source.y)];
+            idx = Cell.fillCellsVert(source.y, dest.y, source.x, steps, idx);
         }
         return steps;
     }

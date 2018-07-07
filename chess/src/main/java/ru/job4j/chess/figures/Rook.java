@@ -16,32 +16,19 @@ public class Rook implements Figure {
         return this.position;
     }
 
-    private Cell[] fillSteps(int first, int last, CoordType direction, int otherCoord) {
-        Cell[] steps = new Cell[(Math.abs(last - first))];
-        int idx = 0;
-        int i = first;
-        do {
-            i = i + Integer.signum(last - first);
-            if (direction == CoordType.X) {
-                steps[idx] = Cell.getCell(i, otherCoord);
-            } else if (direction == CoordType.Y) {
-                steps[idx] = Cell.getCell(otherCoord, i);
-            }
-            idx++;
-        } while (i != last);
-        return steps;
-    }
-
     @Override
     public Cell[] way(Cell source, Cell dest) {
         int deltaX = Math.abs(dest.x - source.x);
         int deltaY = Math.abs(dest.y - source.y);
         Cell[] steps = new Cell[0];
         if (!(deltaX > 0 && deltaY > 0)) {
+            int idx = 0;
             if (deltaX > 0) {
-                steps = fillSteps(source.x, dest.x, CoordType.X, source.y);
+                steps = new Cell[(Math.abs(dest.x - source.x))];
+                idx = Cell.fillCellsHor(source.x, dest.x, source.y, steps, idx);
             } else if (deltaY > 0) {
-                steps = fillSteps(source.y, dest.y, CoordType.Y, source.x);
+                steps = new Cell[(Math.abs(dest.y - source.y))];
+                idx = Cell.fillCellsVert(source.y, dest.y, source.x, steps, idx);
             }
         }
         return steps;
